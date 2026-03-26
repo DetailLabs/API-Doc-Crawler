@@ -25,4 +25,5 @@ Thumbs.db
 # Crawler output (don't commit scraped data)
 output/
 test-output-*/
+jobs/
 *.zip
