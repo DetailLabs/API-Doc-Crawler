@@ -6,7 +6,67 @@ Point it at a docs URL — it discovers all endpoints, scrapes structured data f
 
 Built with [Playwright](https://playwright.dev/python/) for headless browser automation. Handles JavaScript-rendered docs, password-gated sites, OpenAPI/Swagger specs, and sidebar-navigated platforms like ReadMe, GitBook, and Docusaurus.
 
+Available as a **web app** (paste a URL, get a collection) or as **CLI scripts** for full control over each pipeline step.
+
 ---
+
+## Web App
+
+The fastest way to use API Doc Crawler. Paste a docs URL in the browser and download a Postman collection — no command line needed.
+
+### Option 1: GitHub Codespaces (no install required)
+
+GitHub Codespaces runs the app in a cloud container directly from this repo. Free tier includes 120 core-hours/month (~60 hours on a 2-core machine).
+
+1. Click **Code** → **Codespaces** → **Create codespace on main**
+2. Wait for setup to complete (~2 minutes — installs dependencies and Chromium)
+3. Run in the terminal:
+   ```bash
+   python app.py
+   ```
+4. A browser tab opens automatically to the app (or click the forwarded port 8000 link)
+
+> Stop your Codespace when done to conserve free hours.
+
+### Option 2: Run locally
+
+Requires Python 3.10+.
+
+```bash
+git clone https://github.com/DetailLabs/API-Doc-Crawler.git
+cd API-Doc-Crawler
+python3 -m venv venv
+source venv/bin/activate   # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+playwright install --with-deps chromium
+python app.py
+```
+
+Open http://localhost:8000
+
+### Option 3: Docker
+
+```bash
+git clone https://github.com/DetailLabs/API-Doc-Crawler.git
+cd API-Doc-Crawler
+docker build -t api-doc-crawler .
+docker run -p 8000:8000 api-doc-crawler
+```
+
+Open http://localhost:8000
+
+### Web App Features
+
+- **Live progress** — real-time status updates as endpoints are discovered and scraped
+- **Endpoint preview** — table showing method, path, and category for all discovered endpoints
+- **One-click download** — download the Postman collection JSON directly from the browser
+- **Advanced options** — optional password for gated docs, custom collection name, max endpoint limit
+
+---
+
+## CLI Usage
+
+For full control over each pipeline step, use the scripts directly.
 
 ## Pipeline Overview
 
@@ -25,11 +85,11 @@ output/endpoints/        output/endpoints.json    output/postman_collection.json
 ## Install
 
 ```bash
-pip install playwright
-playwright install chromium
+pip install -r requirements.txt
+playwright install --with-deps chromium
 ```
 
-Requires Python 3.10+.
+Requires Python 3.10+. The `--with-deps` flag installs system libraries needed by Chromium on Linux.
 
 ---
 
