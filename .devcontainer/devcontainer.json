@@ -1,0 +1,12 @@
+{
+  "name": "API Doc Crawler",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "postCreateCommand": "pip install -r requirements.txt && playwright install --with-deps chromium",
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "Web App",
+      "onAutoForward": "openBrowser"
+    }
+  }
+}
