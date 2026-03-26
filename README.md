@@ -6,7 +6,16 @@ Point it at a docs URL — it discovers all endpoints, scrapes structured data f
 
 Built with [Playwright](https://playwright.dev/python/) for headless browser automation. Handles JavaScript-rendered docs, password-gated sites, OpenAPI/Swagger specs, and sidebar-navigated platforms like ReadMe, GitBook, and Docusaurus.
 
-Available as a **web app** (paste a URL, get a collection) or as **CLI scripts** for full control over each pipeline step.
+---
+
+## Two Ways to Use
+
+| | Web App | CLI Scripts |
+|---|---|---|
+| **Best for** | Quick one-off crawls | Automation, scripting, fine-tuning |
+| **How it works** | Paste a URL in the browser, click a button, download the collection | Run three scripts in sequence with full control over each step |
+| **Setup** | `python app.py` → open browser | Run scripts directly from the terminal |
+| **Intermediate output** | Handled automatically | Inspect and edit between steps |
 
 ---
 
@@ -14,7 +23,7 @@ Available as a **web app** (paste a URL, get a collection) or as **CLI scripts**
 
 The fastest way to use API Doc Crawler. Paste a docs URL in the browser and download a Postman collection — no command line needed.
 
-### Option 1: GitHub Codespaces (no install required)
+### Quick Start: GitHub Codespaces (no install required)
 
 GitHub Codespaces runs the app in a cloud container directly from this repo. Free tier includes 120 core-hours/month (~60 hours on a 2-core machine).
 
@@ -28,7 +37,7 @@ GitHub Codespaces runs the app in a cloud container directly from this repo. Fre
 
 > Stop your Codespace when done to conserve free hours.
 
-### Option 2: Run locally
+### Run the Web App Locally
 
 Requires Python 3.10+.
 
@@ -44,7 +53,7 @@ python app.py
 
 Open http://localhost:8000
 
-### Option 3: Docker
+### Run the Web App with Docker
 
 ```bash
 git clone https://github.com/DetailLabs/API-Doc-Crawler.git
@@ -64,13 +73,11 @@ Open http://localhost:8000
 
 ---
 
-## CLI Usage
+## CLI Scripts
 
-For full control over each pipeline step, use the scripts directly.
+For full control over each pipeline step, use the three scripts directly. Each reads the previous step's output, so you can re-run any step independently without re-crawling.
 
-## Pipeline Overview
-
-The project is split into three standalone scripts. Each reads the previous step's output, so you can re-run any step independently without re-crawling.
+### Pipeline
 
 ```
 01_download.py          02_categorize.py          03_postman.py
@@ -80,22 +87,22 @@ output/endpoints/        output/endpoints.json    output/postman_collection.json
 (one JSON per endpoint)  (clean, deduplicated)    (import into Postman)
 ```
 
----
-
-## Install
+### Install
 
 ```bash
+git clone https://github.com/DetailLabs/API-Doc-Crawler.git
+cd API-Doc-Crawler
+python3 -m venv venv
+source venv/bin/activate   # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 playwright install --with-deps chromium
 ```
 
 Requires Python 3.10+. The `--with-deps` flag installs system libraries needed by Chromium on Linux.
 
----
+### Examples
 
-## Usage
-
-### Public API docs (no password)
+**Public API docs (no password)**
 
 ```bash
 python3 scripts/01_download.py https://petstore.swagger.io -o output
@@ -103,7 +110,7 @@ python3 scripts/02_categorize.py -o output
 python3 scripts/03_postman.py -o output --name "Petstore API"
 ```
 
-### Password-protected docs
+**Password-protected docs**
 
 ```bash
 python3 scripts/01_download.py https://developers.example.com/reference -p "yourpassword" -o output
@@ -111,7 +118,7 @@ python3 scripts/02_categorize.py -o output
 python3 scripts/03_postman.py -o output --name "Example API"
 ```
 
-### Debugging (visible browser)
+**Debugging (visible browser)**
 
 ```bash
 python3 scripts/01_download.py https://docs.example.com -p "pass" -o output --no-headless
