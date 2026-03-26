@@ -23,6 +23,14 @@ Built with [Playwright](https://playwright.dev/python/) for headless browser aut
 
 The fastest way to use API Doc Crawler. Paste a docs URL in the browser and download a Postman collection — no command line needed.
 
+<p align="center">
+  <img src="screenshots/form.png" alt="Paste a documentation URL" width="700">
+</p>
+
+<p align="center">
+  <img src="screenshots/results.png" alt="Collection ready with endpoint preview" width="700">
+</p>
+
 ### Quick Start: GitHub Codespaces (no install required)
 
 GitHub Codespaces runs the app in a cloud container directly from this repo. Free tier includes 120 core-hours/month (~60 hours on a 2-core machine).
